@@ -1,3 +1,18 @@
+"""
+Q Learning Agents
+
+This Python file contains my implementations of the Q-learning agent, for use on the gridworld in the Environments dir.
+These 2 classes use two diffrent way to store the Q-table one uses a dictionary and the other uses a NumpyArray
+
+
+Classes:
+    Q_Learning_Agent_V1: The initial implementation of a Q-Learning agent using a dictionary to store the Q-table.
+    Q_Learning_Agent_V2: A reimplementation of the Q-Learning agent using a NumPy array to store the Q-table.
+
+Author:
+    Ferdinand Krammer
+"""
+
 import numpy as np
 np.random.seed(20)
 

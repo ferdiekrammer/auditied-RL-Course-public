@@ -1,6 +1,9 @@
 # %%
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+
+sys.path.insert(0,"../Environments")
 from gridworld import Gridworld
 
 # %%
@@ -19,7 +22,7 @@ print()
 for _ in range(5):
     action = random_agent.choose_action(env.get_available_actions())
     reward, new_position = env.make_step(action)
-    print(f"Action taken: {env.actions[action]}, Reward: {reward}, New position: {new_position}")
+    print(f"Action taken: {env.actions_abreviations[action]}, Reward: {reward}, New position: {new_position}")
     env.print_grid()
     
     if env.get_state() in env.get_terminal_states():
@@ -64,7 +67,7 @@ for episode in range(num_episodes):
     for step in range(max_steps):
         state = env.get_state()
         action = Q_learning_agent_1.choose_action(state)
-        reward, next_state = env.make_step(env.actions.index(action))
+        reward, next_state = env.make_step(env.actions_abreviations.index(action))
         Q_learning_agent_1.Q_table_update(reward,state,action,next_state)
         total_reward += reward
         # state = next_state
@@ -128,7 +131,7 @@ plt.ylabel('reward')
 plt.show()
 
 # Print the Q-table
-print(Q_learning_agent_2.get_Q_table())
+# print(Q_learning_agent_2.get_Q_table())
 
 # %%
 #Generate random for baseline 

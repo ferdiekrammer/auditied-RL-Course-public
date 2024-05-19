@@ -48,15 +48,15 @@ class Gridworld:
         # Choose position of the gold and bomb
         if len(bomb_positions) == self.num_bombs and not use_random_locations:
             self.bomb_positions = np.array(bomb_positions)
-        if len(bomb_positions) == self.num_bombs and not use_random_locations:
+        elif len(bomb_positions) != self.num_bombs and not use_random_locations:
             self.bomb_positions = np.random.choice(self.num_cells, num_bombs, replace=False)
 
         if len(gold_positions) == self.num_gold and not use_random_locations:
             self.gold_positions = np.array(gold_positions)
-        elif len(gold_positions) == self.num_gold and not use_random_locations:
+        elif len(gold_positions) != self.num_gold and not use_random_locations:
             available_positions = [i for i in range(self.num_cells) if i not in self.bomb_positions]
             self.gold_positions = np.random.choice(available_positions, num_gold, replace=False)
-
+        
         if use_random_locations:
             all_positions = np.arange(self.num_cells)
             np.random.shuffle(all_positions)
@@ -72,7 +72,7 @@ class Gridworld:
         while True and positions_to_select > 0:
             random_int = np.random.randint(0,len(possible_agent_positions))
             agent_position = possible_agent_positions[random_int]
-            print(agent_position)
+            # print(agent_position)
             if agent_position not in self.terminal_states:
                 self.agent_position = agent_position
                 break
@@ -81,7 +81,6 @@ class Gridworld:
             print(f'position of agent thats not vlid {positions_to_select}')
             if positions_to_select == 0:
                 print("AGENT POSITION COULDN'T BE FOUND")
-            # self.agent_position = np.random.randint(0, 5)
         
         self.agents_initial_position = self.agent_position
         # Specify rewards
@@ -90,8 +89,8 @@ class Gridworld:
         self.rewards[self.gold_positions] = 10
         
         # Specify available actions
-        self.actions = ["UP", "RIGHT", "DOWN", "LEFT"]
-        self.num_actions = len(self.actions)
+        self.actions_abreviations = ["UP", "RIGHT", "DOWN", "LEFT"]
+        self.num_actions = len(self.actions_abreviations)
         print(f'Terminal states are : {self.terminal_states}')
         print(f'Agents initial position {self.agent_position}')
 
@@ -115,7 +114,7 @@ class Gridworld:
 
     def get_available_actions(self):
         # Gets the available actions 
-        return self.actions
+        return self.actions_abreviations
     
     def get_state(self):
         # Gets the current state of the agent
@@ -132,7 +131,7 @@ class Gridworld:
             action_indices = np.delete(action_indices, action_index)
             action_index = np.random.choice(action_indices, 1)[0]
 
-        action = self.actions[action_index]
+        action = self.actions_abreviations[action_index]
 
         # Determine new position and check whether the agent hits a wall.
         old_position = self.agent_position
@@ -163,3 +162,6 @@ class Gridworld:
         reward = self.rewards[self.agent_position]
         reward -= 1
         return reward, new_position
+
+if __name__ == "__main__":
+    pass
